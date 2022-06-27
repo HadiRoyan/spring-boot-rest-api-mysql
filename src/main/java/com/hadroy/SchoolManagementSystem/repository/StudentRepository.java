@@ -1,6 +1,6 @@
 package com.hadroy.SchoolManagementSystem.repository;
 
-import com.hadroy.SchoolManagementSystem.model.Student;
+import com.hadroy.SchoolManagementSystem.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

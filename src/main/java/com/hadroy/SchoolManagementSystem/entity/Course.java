@@ -1,13 +1,12 @@
-package com.hadroy.SchoolManagementSystem.model;
+package com.hadroy.SchoolManagementSystem.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 @Table(name = "courses")
@@ -27,7 +26,7 @@ public class Course {
     private String teacher;
 
     @ManyToMany(mappedBy = "courses", fetch = FetchType.LAZY)
-    private Set<Student> students = new HashSet<>();
+    private Collection<Student> students = new ArrayList<>();
 
     public Course() {
     }
@@ -61,11 +60,11 @@ public class Course {
         this.teacher = teacher;
     }
 
-    public Set<Student> getStudents() {
+    public Collection<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(Set<Student> students) {
+    public void setStudents(Collection<Student> students) {
         this.students = students;
     }
 }

@@ -1,6 +1,7 @@
 package com.hadroy.SchoolManagementSystem.controller;
 
-import com.hadroy.SchoolManagementSystem.model.Student;
+import com.hadroy.SchoolManagementSystem.entity.Student;
+import com.hadroy.SchoolManagementSystem.model.StudentToCourseForm;
 import com.hadroy.SchoolManagementSystem.service.StudentService;
 import com.hadroy.SchoolManagementSystem.model.ResponseApi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,9 @@ import java.util.List;
 @RequestMapping("/api/students")
 public class StudentController {
 
-    @Autowired
     private final StudentService studentService;
 
+    @Autowired
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
@@ -45,5 +46,10 @@ public class StudentController {
     @DeleteMapping("/{name}")
     public ResponseEntity<ResponseApi<String>> deleteStudent(@PathVariable String name) {
         return new ResponseEntity<>(studentService.deleteStudentByName(name), HttpStatus.OK);
+    }
+
+    @PostMapping("/add-course")
+    public ResponseEntity<ResponseApi<String>> addCourse(@RequestBody StudentToCourseForm form) {
+        return new ResponseEntity<>(studentService.addStudentToCourse(form), HttpStatus.OK);
     }
 }

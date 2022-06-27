@@ -1,7 +1,7 @@
 package com.hadroy.SchoolManagementSystem.service;
 
 import com.hadroy.SchoolManagementSystem.error.NotFoundException;
-import com.hadroy.SchoolManagementSystem.model.Course;
+import com.hadroy.SchoolManagementSystem.entity.Course;
 import com.hadroy.SchoolManagementSystem.model.ResponseApi;
 import com.hadroy.SchoolManagementSystem.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;

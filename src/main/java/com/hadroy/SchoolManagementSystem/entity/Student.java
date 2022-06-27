@@ -1,4 +1,4 @@
-package com.hadroy.SchoolManagementSystem.model;
+package com.hadroy.SchoolManagementSystem.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -8,9 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "students")
@@ -38,16 +36,16 @@ public class Student {
     @NotNull @Min(value = 1, message = "age cannot negative")
     private int age;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "students_courses",
             joinColumns = {
-                @JoinColumn(name = "student_id", referencedColumnName = "id", nullable = false, updatable = false)
+                @JoinColumn(name = "student_id", referencedColumnName = "id")
             },
             inverseJoinColumns = {
-                @JoinColumn(name = "courses_id", referencedColumnName = "id", nullable = false, updatable = false)
+                @JoinColumn(name = "courses_id", referencedColumnName = "id")
             }
     )
-    private Set<Course> courses = new HashSet<>();
+    private Collection<Course> courses = new ArrayList<>();
 
     public Student() {
     }
@@ -108,14 +106,13 @@ public class Student {
         this.age = age;
     }
 
-    public Set<Course> getCourses() {
+    public Collection<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(Set<Course> courses) {
+    public void setCourses(Collection<Course> courses) {
         this.courses = courses;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

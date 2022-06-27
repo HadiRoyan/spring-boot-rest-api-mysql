@@ -1,6 +1,6 @@
 package com.hadroy.SchoolManagementSystem.controller;
 
-import com.hadroy.SchoolManagementSystem.model.Course;
+import com.hadroy.SchoolManagementSystem.entity.Course;
 import com.hadroy.SchoolManagementSystem.model.ResponseApi;
 import com.hadroy.SchoolManagementSystem.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;

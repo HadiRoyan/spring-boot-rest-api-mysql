@@ -1,13 +1,14 @@
 package com.hadroy.SchoolManagementSystem.service;
 
 import com.hadroy.SchoolManagementSystem.error.NotFoundException;
-import com.hadroy.SchoolManagementSystem.model.Student;
+import com.hadroy.SchoolManagementSystem.entity.Course;
+import com.hadroy.SchoolManagementSystem.entity.Student;
+import com.hadroy.SchoolManagementSystem.model.StudentToCourseForm;
+import com.hadroy.SchoolManagementSystem.repository.CourseRepository;
 import com.hadroy.SchoolManagementSystem.repository.StudentRepository;
 import com.hadroy.SchoolManagementSystem.model.ResponseApi;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,8 +16,13 @@ import java.util.Optional;
 @Service
 public class StudentService {
 
+    private final StudentRepository studentRepository;
+    private final CourseRepository courseRepository;
     @Autowired
-    private StudentRepository studentRepository;
+    public StudentService(StudentRepository studentRepository, CourseRepository courseRepository) {
+        this.studentRepository = studentRepository;
+        this.courseRepository = courseRepository;
+    }
 
     public ResponseApi<Student> create(Student student) {
         studentRepository.save(student);
@@ -114,5 +120,27 @@ public class StudentService {
             throw new NotFoundException("Student with name ='"+name+"' is Not Found!!");
         }
 
+    }
+
+    public ResponseApi<String> addStudentToCourse(StudentToCourseForm form) {
+
+        Optional<Student> findStudent = studentRepository.findStudentByName(form.getStudentName());
+        Optional<Course> findCourse = courseRepository.findCourseByTitle(form.getCourseTitle());
+
+        if (findStudent.isPresent() && findCourse.isPresent()) {
+            Student student = findStudent.get();
+            Course course = findCourse.get();
+
+            student.getCourses().add(course);
+            studentRepository.save(student);
+
+            return new ResponseApi<>(
+                    200,
+                    "OK",
+                    student.getName() + " has successfully updated the data (course)"
+            );
+        } else {
+            throw new NotFoundException("Student or Course is not found");
+        }
     }
 }
